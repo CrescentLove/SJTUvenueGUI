@@ -9,6 +9,7 @@ description:气膜抢票程序，实现功能如下：
             4.GUI界面
             5.可能的封装程序
 """
+import datetime
 import random
 import time
 
@@ -45,10 +46,30 @@ def selMode(Mode=1):
                 break
             time.sleep(random.randint(1, 60))
 
+def autoSeizor():
+    Wdate = CONFIG[0]
+    Wtime = CONFIG[1]
+    Wsite = CONFIG[2]
+    Gtime = CONFIG[3]
+
+    st_Buy = 0
+    while st_Buy<2:
+        timeNow = int(datetime.datetime.now().strftime("%H%M%S"))
+        if timeNow > 115500 and time < 120100:
+            st_Buy += venSeizor().getOne(Wdate, Wtime, Wsite, Gtime)
+            if st_Buy:
+                Mail().mail2me(1)
+        else:
+            st_Buy += venSeizor().getwhich(Wdate, Wtime, Wsite)
+            if st_Buy:
+                Mail().mail2me(1)
+    # TODO:下一步装饰器来完成邮件发送，美观
+
+
 
 def main():
-    loGin();
-    selMode(Mode=2);
+    loGin()
+    autoSeizor()
 
     # gymSeizor = venSeizor().getwhich(3,0)
 
