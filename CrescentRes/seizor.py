@@ -9,7 +9,7 @@ import random
 import time
 import requests
 from retry import retry
-import CrescentRes.encrypt as encrypt
+import encrypt
 
 # 场地ID
 VENTYPEID = {
@@ -54,7 +54,7 @@ class venSeizor():
             'Content-Type': 'application/json;charset=UTF-8'}
         self.__Fieldurl = 'https://sports.sjtu.edu.cn/manage/fieldDetail/queryFieldSituation'
         self.Bcookie = '_ga=GA1.3.1895526322.1645009080; NSC_wt_tqpsut.tkuv.fev.do_2020=ffffffff097f1cec45525d5f4f58455e445a4a4229a0; rememberMe=1Q9+5BqJn6B1Z3NfIeS5WkyMPFdJC6gOsMCevAEoHei/mPV+fOa94pvS+NnV1mkKH1/zDCn5ZbP1Rpu6ksyeiH7s2DbIO0ZDQ6s4AZUXk3u0dVdCCWx7gYt52eKedx/wGHf8yL5GS1PESvpdet1D/vwuvw+6b9tfavj7atSmyAYs715DeWRBO9FZAUgpIR/DG5428Uj7nHwG1Ke4JvFS0TCtvlLZNtt9R2sYX25c7AV/bKTVzp0aMDzhsKn0+EnC8eT4yaXXW4bGxjmZOUVlZ7Kov5WRKng6Trkn2Qi3NXLePJ4nX+16c0X/Yg6QZGdEtDaRbYC+BzQ9Xx2MA0XJHUoFBfE6gtQQfFab4c3e7T5J+492EWChbwyVWO6WVvYqb73NvHm/33HIbWvi5O4hI7dcpewZx1dF0Oo9mo80fgMp/+butLW6ApufzuvO17ZHkvLe+f6ezoopQlH11gacI1PfezkcZ/ap78RtovVw94gNI3rC98k42vchwyEMM/s9VYtovr59Iyxm7+JnHt4fA4rPznl9rb9opLPvAfh5GHkQfoLyQLP/UWB1gSPvr3ySZPKEUQKUWmZrLrCfjesdp8yhKaJ3pQjvWTv1RVsf5CNAJ7v8xklR20Z0ch/aOiTbwShg7T7HCehDpuojrUmnpLXvPaPKu/8Akq1YkC4MAxku0eAaQMGvheOy6p4AwLmBFfTjpKiMaP+rpmpmS3tTJAgfMzME0AsZ7edcpWDmWqlwVFpF/0qhN/dtbYxJDbPWPzoD4TvTjUQ4h8QoNpNPodvdMW8GojptpGzbHabw1IQgtaw/2kt/cBrmhDYkCAjfQMv2dNsx16fLAdWlxCVWHSTJrXBL6hIwwIhIa2VUZZOseKYkOGrSLj9IZje6J280ulszdgtouGUvDLTHdiwcUa3qezZaWuVhNmW0MXshTN4IBm5c5IeDhzRtYYZadPhhVK2ANLIwpSBCFK12xkhQj5efmkyCvlRFlMIH8OJOM7ljHUYHKf6knS91r0jTF8XN2dYkIJIY67Sb6oNTsfUN2Cu6qpJJeh+f3Rtw4iJ1fb4vF6Lk0hIoXs9lBHr0JC1Iubo864XJ0PQB0TG8kA4oOyGjVcougXe7XtgEyuI5isv+D4rAr5cG/zGw6HZh/5MsqyyqgY+IYF0XFHBUV99MDKrNF14FXsQAp3SCMrOB3H07Q9cIDPZqr2565Vo4pWW2x6qALByzkJD8Xa0vyPkyTS9H8WEYUr8o7AIax8h+TlFmXE+EHNLJGCvQSibJltPS2Gypk8UWWmnA6vaSv6Q6dS6jJcBeK9i7YyNGgswiBtSz/NhDnc+kiSOjqRTryi/xLvoPgc1IxSVP31TMoX8QTroIbN/0Z2Kj+NLmYdeDbjDXXsBQ4aTwdRtif6SkkdQKzAMNynFT7OzlL3w7QmHo3Og/zjSIgx5h7nHgcZWDoXcF7RhSVqU98GsDkjeMsHHXUVfwW/4M3sDxKq48fsAZwap4ADLQM4OMFSvOxlMe9WZezWcNMg1rVML6w9qNHA1odv4sIzOKhVzV6UM+Aisdz+55eLjFARcf4Uv25iHzxxaFeWoHxV+5107RjbsJSiSeacloX19jzAmG2MGuIzW/rSCQrIvciXMTnsA/TrjGhsrIPuHPitsMcXpNlnyqKZV2pOfa/gbyDxlW2lrEi+DetvL+w6mGmeRizlM4aJQKR15ggOB3Hv6OfszE9OjoHgSnPF9p/+y10ZVm1jlUjrJ64SjEV/uZvJBabTvRfk3+8PxmsTn4W0qk56sLw8x2350NzUmfz3g7zs20QFXrPlyvGSxaoaKohsxEFqRgAtxiM53paX1ywP4RTGGZnNMb9NKIT/uc7TckXwAThq+sHZbffckyjCtcxN6f2dLV3YAdYbN8UFpU5Av63k+vC4yJAb4xMGdGtAp9mwdddujguGo/IirCrzIziUPXn23M+zRI2MoVjfW4GydWx+GwJrMjAQsShhBcLYWnYLfFDsH0TaDl8yTN1K23WSNuPltydEGGk9IBrrReuceLkO00obw1TuaM23HdtLIm2fdhRqnNEvWh4w==; JSESSIONID=40744859-e149-41e3-9447-5a7d91cc49f9'
-        self.ConfirmUrl = 'https://sports.sjtu.edu.cn/venue/personal/ConfirmOrder'
+        self.__ConfirmUrl = 'https://sports.sjtu.edu.cn/venue/personal/ConfirmOrder'
 
         self.ConHeader = {
             'User-Agent': self.userAgent,
@@ -176,7 +176,7 @@ class venSeizor():
             header = self.ConHeader
             header["sid"] = sid
             header["tim"] = tim
-            ConRes = requests.post(self.ConfirmUrl, headers=header, data=data_encrypt)
+            ConRes = requests.post(self.__ConfirmUrl, headers=header, data=data_encrypt)
             # print(ConRes.json())
             if (ConRes.json()["code"] == 0):
                 print('预定成功')

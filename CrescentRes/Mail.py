@@ -10,12 +10,12 @@ import requests
 
 
 class Mail(object):
-    def __init__(self):
+    def __init__(self,mail_host,user,password,recr):
 
         self.mail_host = 'smtp.163.com'
         self.user = '15922132101'
-        self.__password = 'SUZATRCAGNESVOCH'
-        self.sender = '15922132101@163.com'
+        self.password = 'SUZATRCAGNESVOCH'
+        self.sender = 'SJTU预定脚本@Crescentlove'
         self.recr = ['markdowndir@foxmail.com']
         self.miaoId = "tSe9OaP"
         self.text = ['预定失败', '预定成功']
@@ -31,7 +31,7 @@ class Mail(object):
             # 连接到服务器
             smtpObj.connect(self.mail_host, 25)
             # 登录到服务器
-            smtpObj.login(self.user, self.__password)
+            smtpObj.login(self.user, self.password)
             # 选择邮件内容
             mess = MIMEText(self.text[status], 'plain', 'utf-8')
             # 发送方信息
