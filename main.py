@@ -27,12 +27,7 @@ class App(ttk.Frame):
         self.entry.grid(row=1, column=1, padx=5, pady=(0, 10), sticky="ew")
 
     def setup_widgets(self):
-        self.paned = ttk.PanedWindow(self)
-        self.paned.grid(row=0, column=0, pady=(25, 5), sticky="nsew", rowspan=3)
         # Create a Frame for the Checkbuttons
-        self.zhuye = ttk.Frame(self.paned, padding=5)
-        self.paned.add(self.pane_1, weight=1)
-
 
         self.menu_frame = ttk.LabelFrame(self, text="菜单", padding=(40, 10))
         self.menu_frame.grid(
