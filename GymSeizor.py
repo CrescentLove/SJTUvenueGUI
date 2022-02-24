@@ -17,7 +17,7 @@ from CrescentRes.Mail import Mail
 from CrescentRes.login import loGin
 from CrescentRes.seizor import venSeizor
 
-CONFIG = ['2022-3-2', 13, 4, 120000]
+CONFIG = ['2022-3-3', 13, 4, 120000]
 
 
 def selMode(Mode=1):
@@ -55,7 +55,7 @@ def autoSeizor():
     st_Buy = 0
     while st_Buy<2:
         timeNow = int(datetime.datetime.now().strftime("%H%M%S"))
-        if timeNow > 115500 and time < 120100:
+        if timeNow > 115500 and timeNow < 120100:
             st_Buy += venSeizor().getOne(Wdate, Wtime, Wsite, Gtime)
             if st_Buy:
                 Mail().mail2me(1)
@@ -63,6 +63,7 @@ def autoSeizor():
             st_Buy += venSeizor().getwhich(Wdate, Wtime, Wsite)
             if st_Buy:
                 Mail().mail2me(1)
+            time.sleep(random.randint(1, 58))
     # TODO:下一步装饰器来完成邮件发送，美观
 
 
