@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edd892ab-a3a0-4b5e-820b-ecf4a135d6d1" name="变更" comment="gui">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testTK.py" beforeDir="false" afterPath="$PROJECT_DIR$/testTK.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +44,7 @@
       <recent name="Z:\CrescentDemo\Badminton_2011\SJTUVenue_beta" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.testTK">
     <configuration name="GymSeizor" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SJTUVenue_beta" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -150,10 +152,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.testTK" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.example (1)" />
         <item itemvalue="Python.example" />
-        <item itemvalue="Python.testTK" />
         <item itemvalue="Python.GymSeizor" />
       </list>
     </recent_temporary>
@@ -174,7 +176,21 @@
       <option name="project" value="LOCAL" />
       <updated>1645705296311</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="gui">
+      <created>1645706247061</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645706247061</updated>
+    </task>
+    <task id="LOCAL-00003" summary="gui">
+      <created>1645706461550</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645706461550</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
