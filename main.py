@@ -11,6 +11,11 @@ from tkinter import filedialog
 class App(ttk.Frame):
     def __init__(self, parent):
         ttk.Frame.__init__(self)
+        # Make the app responsive
+        for index in [0, 1, 2]:
+            self.columnconfigure(index=index, weight=1, )
+            self.rowconfigure(index=index, weight=1)
+
         self.option_menu_list = ["", "羽毛球", "篮球"]
         self.var_4 = tk.StringVar(value=self.option_menu_list[1])
         self.option_menu_listVenue = ["", "气膜", "霍体"]
@@ -32,8 +37,8 @@ class App(ttk.Frame):
         os.system(r".\userBook.md")
 
     def clickyouxiang(self):
-        self.mailPage = ttk.LabelFrame(self,text="配置区", padding=(0, 0, 0, 10), labelanchor="n")
-        self.mailPage.grid(row=0, column=1, padx=10, pady=(30, 10), sticky="nsew")
+        self.mailPage = ttk.LabelFrame(self, text="配置", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
+        self.mailPage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
         self.mailPage.columnconfigure(index=0, weight=1)
 
         self.hostname = ttk.Label(self.mailPage,text="Mail Host")
@@ -61,15 +66,15 @@ class App(ttk.Frame):
         self.Mailentry4.grid(row=4, column=2, padx=5, pady=(0, 10), sticky="ew")
 
         self.mailPage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
-        self.mailPage2.grid(row=1, column=1, padx=10, pady=(30, 10), sticky="nsew")
+        self.mailPage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
         self.mailPage2.columnconfigure(index=0, weight=1)
 
         self.storeMail = ttk.Button(self.mailPage2, text="保存方案", style="Accent.TButton")
         self.storeMail.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
 
     def clickwangluo(self):
-        self.netPage = ttk.LabelFrame(self,text="配置区", padding=(0, 0, 0, 10),labelanchor="n")
-        self.netPage.grid(row=0, column=1, padx=10, pady=(30, 10), sticky="nsew")
+        self.netPage = ttk.LabelFrame(self, text="配置", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
+        self.netPage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
         self.netPage.columnconfigure(index=0, weight=1)
 
         self.cookielogin = ttk.Label(self.netPage, text="登录Cookies")
@@ -91,44 +96,44 @@ class App(ttk.Frame):
         self.Netentry3.grid(row=3, column=2, padx=5, pady=(0, 10), sticky="ew")
 
         self.netPage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
-        self.netPage2.grid(row=1, column=1, padx=10, pady=(30, 10), sticky="nsew")
+        self.netPage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
         self.netPage2.columnconfigure(index=0, weight=1)
 
         self.storeNet = ttk.Button(self.netPage2, text="保存方案", style="Accent.TButton")
         self.storeNet.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
 
     def clickchangdi(self):
-        self.venuePage = ttk.LabelFrame(self,text="配置区", padding=(0, 0, 0, 10),labelanchor="n")
-        self.venuePage.grid(row=0, column=1, padx=10, pady=(30, 10), sticky="nsew",)
+        self.venuePage = ttk.LabelFrame(self, text="配置", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
+        self.venuePage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
         self.venuePage.columnconfigure(index=0, weight=1)
 
         self.yundongming = ttk.Label(self.venuePage, text="体育项目")
-        self.yundongming.grid(row=1, column=0, padx=5, pady=(0, 10), sticky="w")
+        self.yundongming.grid(row=1, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.yundongmenu = ttk.OptionMenu(self.venuePage, self.var_4, *self.option_menu_list)
-        self.yundongmenu.grid(row=1, column=1, padx=5, pady=10, sticky="w")
+        self.yundongmenu.grid(row=1, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
 
         self.changdiming = ttk.Label(self.venuePage, text="体育项目")
-        self.changdiming.grid(row=2, column=0, padx=5, pady=(0, 10), sticky="w")
+        self.changdiming.grid(row=2, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.changdimenu = ttk.OptionMenu(self.venuePage, self.var_5, *self.option_menu_listVenue)
-        self.changdimenu.grid(row=2, column=1, padx=5, pady=10, sticky="w")
+        self.changdimenu.grid(row=2, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
 
         self.timeming = ttk.Label(self.venuePage, text="期望时间")
-        self.timeming.grid(row=3, column=0, padx=5, pady=(0, 10), sticky="w")
+        self.timeming.grid(row=3, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.timemenu = ttk.OptionMenu(self.venuePage, self.var_6, *self.option_menu_listTime)
-        self.timemenu.grid(row=3, column=1, padx=5, pady=10, sticky="w")
+        self.timemenu.grid(row=3, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
 
         self.fieldming = ttk.Label(self.venuePage, text="期望场地")
-        self.fieldming.grid(row=4, column=0, padx=5, pady=(0, 10), sticky="w")
+        self.fieldming.grid(row=4, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.fieldmenu = ttk.OptionMenu(self.venuePage, self.var_7, *self.option_menu_listfield)
-        self.fieldmenu.grid(row=4, column=1, padx=5, pady=10, sticky="w")
+        self.fieldmenu.grid(row=4, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
 
         self.configming = ttk.Label(self.venuePage, text="配置方案")
-        self.configming.grid(row=5, column=0, padx=5, pady=(0, 10), sticky="w")
+        self.configming.grid(row=5, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.configmenu = ttk.OptionMenu(self.venuePage, self.var_8, *self.option_menu_listconfig)
-        self.configmenu.grid(row=5, column=1, padx=5, pady=10, sticky="w")
+        self.configmenu.grid(row=5, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
         # 设置选项区
         self.venuePage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
-        self.venuePage2.grid(row=1, column=1, padx=10, pady=(30, 10), sticky="nsew")
+        self.venuePage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
         self.venuePage2.columnconfigure(index=0, weight=1)
 
 
@@ -140,10 +145,12 @@ class App(ttk.Frame):
 
 
     def clickzhuye(self):
-        self.rootPage = ttk.Frame(self, padding=(0, 0, 0, 10))
-        self.rootPage.grid(row=0, column=1, padx=10, pady=(30, 10), sticky="nsew", rowspan=5)
+        self.rootPage = ttk.LabelFrame(self, text="菜单", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
+        self.rootPage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
         self.rootPage.columnconfigure(index=0, weight=1)
 
+        self.switch = ttk.Checkbutton(self.rootPage, text="Switch", style="Switch.TCheckbutton")
+        self.switch.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
         # 点击开始抢票！（会检查是否配置方案，网络，如果没有弹出警告框跳转，检查是否配置邮件，弹出建议配置）
 
 
@@ -154,10 +161,8 @@ class App(ttk.Frame):
     def setup_widgets(self):
         # Create a Frame for the Checkbuttons
 
-        self.menu_frame = ttk.LabelFrame(self, text="菜单", padding=(40, 10),labelanchor="n")
-        self.menu_frame.grid(
-            row=0, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew"
-        )
+        self.menu_frame = ttk.LabelFrame(self, text="菜单", padding=(10, 5),labelanchor="n") # 修改按钮和边框宽度
+        self.menu_frame.grid(row=0, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew")
 
         # Menubuttons
         self.zhuye = ttk.Button(
