@@ -129,3 +129,6 @@ dmypy.json
 .pyre/
 
 .idea/
+/mailConfig.json
+/netConfig.json
+/venueConfig.json
