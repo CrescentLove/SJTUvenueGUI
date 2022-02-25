@@ -9,7 +9,7 @@ import random
 import time
 import requests
 from retry import retry
-import encrypt
+import CrescentRes.encrypt as encrypt
 
 # 场地ID
 VENTYPEID = {
@@ -115,7 +115,7 @@ class venSeizor():
         """
         st_cru = 0
 
-        Sited = self.getField(Wdate)
+        Sited = self.getField("羽毛球",Wdate)
         for i in range(14, thres, -1):
             if Sited[i][Wsite] == 1:
                 payload = self.getInfo(Wdate, i, Wsite)

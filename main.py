@@ -2,10 +2,14 @@
 # @TIME :2022/2/24 15:20
 # @Author :CrescentLove
 # @Software :PyCharm
+import json
 import os
 import tkinter as tk
 from tkinter import ttk
+import tkinter.messagebox #这个是消息框，对话框的关键
 # from tkinter import filedialog
+import GymSeizor
+
 
 
 class App(ttk.Frame):
@@ -31,8 +35,53 @@ class App(ttk.Frame):
         self.option_menu_listconfig = ["", "方案1", "方案2", "方案3"]
         self.var_8 = tk.StringVar(value=self.option_menu_listconfig[1])
 
+        self.var_isam = tk.StringVar()
+        self.var_tod = tk.StringVar()
+        self.var_easy = tk.StringVar()
         self.setup_widgets()
 
+############################################################################
+    def start(self):
+        if not os.path.exists('mailConfig.json'):
+            ismail = tkinter.messagebox.askokcancel('提示','是否配置邮箱?')
+            if ismail:
+                self.clickyouxiang()
+        if not os.path.exists('venueConfig.json'):
+            isven = tkinter.messagebox.showwarning('警告','请配置场地信息')
+            self.clickchangdi()
+        if not os.path.exists('venueConfig.json'):
+            isven = tkinter.messagebox.showwarning('警告','请配置网络参数')
+            self.clickwangluo()
+        print('ddddddddd')
+
+
+
+####################################################################################################
+    def delnet(self):
+        self.Netentry1.delete(0,"end")
+        self.Netentry2.delete(0, "end")
+        self.Netentry3.delete(0, "end")
+    def savenet(self):
+        with open(file='netConfig.json',mode='w+',encoding='utf-8') as n:
+            data = {"loginCookie":self.Netentry1.get(),"confirmCookie":self.Netentry2.get(),"userAgent":self.Netentry3.get()}
+            json.dump(data, n)
+
+    def delmail(self):
+        self.Mailentry1.delete(0,"end")
+        self.Mailentry2.delete(0, "end")
+        self.Mailentry3.delete(0, "end")
+        self.Mailentry4.delete(0, "end")
+    def savemail(self):
+        with open(file='mailConfig.json',mode='w+',encoding='utf-8') as n:
+            data = {"host":self.Mailentry1.get(),"user":self.Mailentry2.get(),"password":self.Mailentry3.get(),"recr":self.Mailentry4.get()}
+            json.dump(data, n)
+
+    def saveven(self):
+        with open(file='venueConfig.json',mode='w+',encoding='utf-8') as n:
+            data = {"sport":self.var_4.get(),"venue":self.var_5.get(),"time":self.var_6.get(),"ci":self.var_7.get(),"proj":self.var_8.get()}
+            json.dump(data, n)
+
+#####################################################################################################
     def clickshouce(self):
         os.system(r".\userBook.md")
 
@@ -42,35 +91,46 @@ class App(ttk.Frame):
         self.mailPage.columnconfigure(index=0, weight=1)
 
         self.hostname = ttk.Label(self.mailPage,text="Mail Host")
-        self.hostname.grid(row=1, column=1, padx=5,pady=(0,10),sticky="ew")
+        self.hostname.grid(row=1, column=0, padx=5,pady=(0,10),sticky="ew")
         self.Mailentry1 = ttk.Entry(self.mailPage)
-        self.Mailentry1.insert(0, 'smtp.163.com')
-        self.Mailentry1.grid(row=1, column=2, padx=5, pady=(0, 10), sticky="ew")
+        self.Mailentry1.grid(row=1, column=1, padx=5, pady=(0, 10), sticky="ew")
 
         self.username = ttk.Label(self.mailPage, text="User Name")
-        self.username.grid(row=2, column=1, padx=5, pady=(0, 10), sticky="ew")
+        self.username.grid(row=2, column=0, padx=5, pady=(0, 10), sticky="ew")
         self.Mailentry2 = ttk.Entry(self.mailPage)
-        self.Mailentry2.insert(0,"需邮箱账号")
-        self.Mailentry2.grid(row=2, column=2, padx=5, pady=(0, 10), sticky="ew")
+        self.Mailentry2.grid(row=2, column=1, padx=5, pady=(0, 10), sticky="ew")
 
         self.password = ttk.Label(self.mailPage, text="Password")
-        self.password.grid(row=3, column=1, padx=5, pady=(0, 10), sticky="ew")
-        self.Mailentry3 = ttk.Entry(self.mailPage)
-        self.Mailentry3.insert(0, '需授权码/非账户密码')
-        self.Mailentry3.grid(row=3, column=2, padx=5, pady=(0, 10), sticky="ew")
+        self.password.grid(row=3, column=0, padx=5, pady=(0, 10), sticky="ew")
+        self.Mailentry3 = ttk.Entry(self.mailPage,show='*')
+        self.Mailentry3.grid(row=3, column=1, padx=5, pady=(0, 10), sticky="ew")
 
         self.receiver = ttk.Label(self.mailPage, text="Receiver")
-        self.receiver.grid(row=4, column=1, padx=5, pady=(0, 10), sticky="ew")
+        self.receiver.grid(row=4, column=0, padx=5, pady=(0, 10), sticky="ew")
         self.Mailentry4 = ttk.Entry(self.mailPage)
-        self.Mailentry4.insert(0, '需要发送提醒的邮箱')
-        self.Mailentry4.grid(row=4, column=2, padx=5, pady=(0, 10), sticky="ew")
+        self.Mailentry4.grid(row=4, column=1, padx=5, pady=(0, 10), sticky="ew")
 
-        self.mailPage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
-        self.mailPage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
-        self.mailPage2.columnconfigure(index=0, weight=1)
+        try:
+            with open("mailConfig.json") as fmail:
+                k = json.loads(fmail.read())
 
-        self.storeMail = ttk.Button(self.mailPage2, text="保存方案", style="Accent.TButton")
-        self.storeMail.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
+                self.Mailentry1.insert(0, k["host"])
+                self.Mailentry2.insert(0, k["user"])
+                self.Mailentry3.insert(0, k["password"])
+                self.Mailentry4.insert(0,k["recr"])
+
+        except Exception as e:
+            print(e)
+            self.Mailentry1.insert(0, '邮箱host/如smtp.163.com')
+            self.Mailentry2.insert(0, '邮箱账号')
+            self.Mailentry3.insert(0, '授权码,非登陆密码')
+            self.Mailentry4.insert(0, '需要发送提醒的邮箱')
+
+        self.qingkongM = ttk.Button(self.mailPage, text="清空", command=self.delmail)
+        self.qingkongM.grid(row=5, column=0, padx=5, pady=10, sticky="nsew")
+
+        self.baocunM = ttk.Button(self.mailPage, text="保存", style="Accent.TButton", command=self.savemail)
+        self.baocunM.grid(row=5, column=1, padx=5, pady=10, sticky="nsew")
 
     def clickwangluo(self):
         self.netPage = ttk.LabelFrame(self, text="配置", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
@@ -78,31 +138,65 @@ class App(ttk.Frame):
         self.netPage.columnconfigure(index=0, weight=1)
 
         self.cookielogin = ttk.Label(self.netPage, text="登录Cookies")
-        self.cookielogin.grid(row=1, column=1, padx=5, pady=(0, 10), sticky="ew")
+        self.cookielogin.grid(row=1, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.Netentry1 = ttk.Entry(self.netPage)
-        self.Netentry1.insert(0, '复制登录时Cookies')
-        self.Netentry1.grid(row=1, column=2, padx=5, pady=(0, 10), sticky="ew")
+        # self.Netentry1.insert(0, '复制登录时Cookies')
+        self.Netentry1.grid(row=1, column=1, padx=5, pady=(0, 10), sticky="ew")
 
         self.cookieConfirm = ttk.Label(self.netPage, text="下单Cookies")
-        self.cookieConfirm.grid(row=2, column=1, padx=5, pady=(0, 10), sticky="ew")
+        self.cookieConfirm.grid(row=2, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.Netentry2 = ttk.Entry(self.netPage)
-        self.Netentry2.insert(0, '复制下单时Cookies')
-        self.Netentry2.grid(row=2, column=2, padx=5, pady=(0, 10), sticky="ew")
+        # self.Netentry2.insert(0, '复制下单时Cookies')
+        self.Netentry2.grid(row=2, column=1, padx=5, pady=(0, 10), sticky="ew")
 
         self.userAgent = ttk.Label(self.netPage, text="User Agent")
-        self.userAgent.grid(row=3, column=1, padx=5, pady=(0, 10), sticky="ew")
+        self.userAgent.grid(row=3, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.Netentry3 = ttk.Entry(self.netPage)
-        self.Netentry3.insert(0, '复制任意请求时user-agent参数')
-        self.Netentry3.grid(row=3, column=2, padx=5, pady=(0, 10), sticky="ew")
+        # self.Netentry3.insert(0, '复制任意请求时user-agent参数')
+        self.Netentry3.grid(row=3, column=1, padx=5, pady=(0, 10), sticky="ew")
 
-        self.netPage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
-        self.netPage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
-        self.netPage2.columnconfigure(index=0, weight=1)
+        try:
+            with open("netConfig.json") as fnet:
+                k = json.loads(fnet.read())
 
-        self.storeNet = ttk.Button(self.netPage2, text="保存方案", style="Accent.TButton")
-        self.storeNet.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
+                self.Netentry1.insert(0, k["loginCookie"])
+                self.Netentry2.insert(0, k["confirmCookie"])
+                self.Netentry3.insert(0, k["userAgent"])
+
+        except Exception as e:
+            print(e)
+            self.Netentry1.insert(0, '复制登录时Cookies')
+            self.Netentry2.insert(0, '复制下单时Cookies')
+            self.Netentry3.insert(0, '复制任意请求时user-agent参数')
+
+        self.qingkongN = ttk.Button(self.netPage, text="清空", command=self.delnet)
+        self.qingkongN.grid(row=4, column=0, padx=5, pady=10, sticky="nsew")
+
+        self.baocunN = ttk.Button(self.netPage, text="保存",style="Accent.TButton", command=self.savenet)
+        self.baocunN.grid(row=4, column=1, padx=5, pady=10, sticky="nsew")
+
+
+
+
+        # self.netPage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
+        # self.netPage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
+        # self.netPage2.columnconfigure(index=0, weight=1)
+        #
+        # self.storeNet = ttk.Button(self.netPage2, text="保存方案", style="Accent.TButton")
+        # self.storeNet.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
 
     def clickchangdi(self):
+        try:
+            with open("venueConfig.json") as fven:
+                k = json.loads(fven.read())
+                self.var_4 = tk.StringVar(value=k["sport"])
+                self.var_5 = tk.StringVar(value=k["venue"])
+                self.var_6 = tk.StringVar(value=k["time"])
+                self.var_7 = tk.StringVar(value=k["ci"])
+                self.var_8 = tk.StringVar(value=k["proj"])
+        except Exception as e:
+            print(e)
+
         self.venuePage = ttk.LabelFrame(self, text="配置", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
         self.venuePage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
         self.venuePage.columnconfigure(index=0, weight=1)
@@ -112,7 +206,7 @@ class App(ttk.Frame):
         self.yundongmenu = ttk.OptionMenu(self.venuePage, self.var_4, *self.option_menu_list)
         self.yundongmenu.grid(row=1, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
 
-        self.changdiming = ttk.Label(self.venuePage, text="体育项目")
+        self.changdiming = ttk.Label(self.venuePage, text="体育场馆")
         self.changdiming.grid(row=2, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.changdimenu = ttk.OptionMenu(self.venuePage, self.var_5, *self.option_menu_listVenue)
         self.changdimenu.grid(row=2, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
@@ -131,32 +225,40 @@ class App(ttk.Frame):
         self.configming.grid(row=5, column=0, padx=5, pady=(0, 10), sticky="ewsn")
         self.configmenu = ttk.OptionMenu(self.venuePage, self.var_8, *self.option_menu_listconfig)
         self.configmenu.grid(row=5, column=1, padx=5, pady=(0, 10), sticky="w"+"n"+"s"+"e")
+
+        self.baocunV = ttk.Button(self.venuePage, text="保存", style="Accent.TButton", command=self.saveven)
+        self.baocunV.grid(row=6, column=2, padx=5, pady=10, sticky="nsew")
+
+
         # 设置选项区
-        self.venuePage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
-        self.venuePage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
-        self.venuePage2.columnconfigure(index=0, weight=1)
-
-
-        self.storeVenue = ttk.Button(self.venuePage2, text="保存方案", style="Accent.TButton")
-        self.storeVenue.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
-
-
-
-
+        # self.venuePage2 = ttk.LabelFrame(self, text="试试这些", padding=(0, 0, 0, 10), labelanchor="n")
+        # self.venuePage2.grid(row=1, column=1, padx=10, pady=(5, 10), sticky="nsew")
+        # self.venuePage2.columnconfigure(index=0, weight=1)
+        #
+        #
+        # self.storeVenue = ttk.Button(self.venuePage2, text="保存方案", style="Accent.TButton")
+        # self.storeVenue.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
 
     def clickzhuye(self):
         self.rootPage = ttk.LabelFrame(self, text="菜单", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
         self.rootPage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
         self.rootPage.columnconfigure(index=0, weight=1)
 
-        self.switch = ttk.Checkbutton(self.rootPage, text="Switch", style="Switch.TCheckbutton")
-        self.switch.grid(row=0, column=0, padx=5, pady=10, sticky="nsew")
+        self.isAm = ttk.Checkbutton(self.rootPage, text="接受15：00前场地？",style="Switch.TCheckbutton", variable=self.var_isam)
+        self.isAm.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
+
+        self.isToday = ttk.Checkbutton(self.rootPage, text="是否抢今日？",style="Switch.TCheckbutton", variable=self.var_tod)
+        self.isToday.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")
+
+        self.iseasy = ttk.Checkbutton(self.rootPage, text="是否简易模式？", style="Switch.TCheckbutton",variable=self.var_easy)
+        self.iseasy.grid(row=2, column=0, padx=5, pady=10, sticky="nsew")
+
+        self.switch = ttk.Button(self.rootPage, text="START",command=self.start)
+        self.switch.grid(row=3, column=0, padx=5, pady=10, sticky="nsew",columnspan=3)
+
+        # self.menu_frame2 = ttk.LabelFrame(self, text="About", padding=(40, 10), labelanchor="n")
+        # self.menu_frame2.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew", columnspan=4)
         # 点击开始抢票！（会检查是否配置方案，网络，如果没有弹出警告框跳转，检查是否配置邮件，弹出建议配置）
-
-
-
-
-
 
     def setup_widgets(self):
         # Create a Frame for the Checkbuttons
@@ -183,9 +285,31 @@ class App(ttk.Frame):
 
 
         self.menu_frame2 = ttk.LabelFrame(self, text="About", padding=(40, 10),labelanchor="n")
-        self.menu_frame2.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew")
+        self.menu_frame2.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew",columnspan=4)
+
+        self.mailA = ttk.Label(self.menu_frame2, text="Mail: markdowndir@foxmail.com", padding=(40, 10))
+        self.mailA.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew", columnspan=4)
 
 
+
+        self.rootPage = ttk.LabelFrame(self, text="菜单", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
+        self.rootPage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
+        self.rootPage.columnconfigure(index=0, weight=1)
+
+        self.isAm = ttk.Checkbutton(self.rootPage, text="接受15：00前场地？", style="Switch.TCheckbutton",
+                                    variable=tk.BooleanVar(value=True))
+        self.isAm.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
+
+        self.isToday = ttk.Checkbutton(self.rootPage, text="是否抢今日？", style="Switch.TCheckbutton",
+                                       variable=tk.BooleanVar(value=True))
+        self.isToday.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")
+
+        self.iseasy = ttk.Checkbutton(self.rootPage, text="是否简易模式？", style="Switch.TCheckbutton",
+                                       variable=tk.BooleanVar(value=True))
+        self.iseasy.grid(row=2, column=0, padx=5, pady=10, sticky="nsew")
+
+        self.switch = ttk.Button(self.rootPage, text="START", command=self.start)
+        self.switch.grid(row=3, column=0, padx=5, pady=10, sticky="nsew", columnspan=3)
         # fd = filedialog.LoadFileDialog(self.menu_frame2)  # 创建打开文件对话框
         # filename = fd.go()  # 显示打开文件对话框，并获取选择的文件名称
         # filedialog.Open(filename)
@@ -226,4 +350,6 @@ if __name__ == "__main__":
     x_cordinate = int((root.winfo_screenwidth() / 2) - (root.winfo_width() / 2))
     y_cordinate = int((root.winfo_screenheight() / 2) - (root.winfo_height() / 2))
     root.geometry("+{}+{}".format(x_cordinate, y_cordinate))
+
+
     root.mainloop()

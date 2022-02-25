@@ -10,15 +10,17 @@ import requests
 
 
 class Mail(object):
-    def __init__(self,mail_host,user,password,recr):
+    def __init__(self, mail_host, user, password, recr, text=None):
 
-        self.mail_host = 'smtp.163.com'
-        self.user = '15922132101'
-        self.password = 'SUZATRCAGNESVOCH'
-        self.sender = 'SJTU预定脚本@Crescentlove'
-        self.recr = ['markdowndir@foxmail.com']
+        if text is None:
+            text = ['预定失败', '预定成功']
+        self.mail_host = mail_host
+        self.user = user
+        self._password = password
+        self.sender = '场馆预定@Crescentlove'
+        self.recr = [recr]
         self.miaoId = "tSe9OaP"
-        self.text = ['预定失败', '预定成功']
+        self.text = text
 
     def mail2me(self, status):
         """
