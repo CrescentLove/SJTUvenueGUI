@@ -2,14 +2,15 @@
 # @TIME :2022/2/24 15:20
 # @Author :CrescentLove
 # @Software :PyCharm
+import datetime
 import json
 import os
 import tkinter as tk
+import tkinter.messagebox  # 这个是消息框，对话框的关键
 from tkinter import ttk
-import tkinter.messagebox #这个是消息框，对话框的关键
+
 # from tkinter import filedialog
-import NewSeizor
-import datetime
+from NewSeizor import Auto
 
 
 class App(ttk.Frame):
@@ -45,7 +46,7 @@ class App(ttk.Frame):
         self.var_7 = tk.StringVar(value=self.option_menu_listfield[1])
         self.option_menu_listconfig = ["", "方案1", "方案2", "方案3"]
         self.var_8 = tk.StringVar(value=self.option_menu_listconfig[1])
-        self.datelist = [(datetime.date.today()+datetime.timedelta(days=i)).strftime("%m-%d") for i in range(7)]
+        self.datelist = [(datetime.date.today() + datetime.timedelta(days=i)).strftime("%m-%d") for i in range(8)]
         self.var_isam = tk.BooleanVar(value=True)
         self.var_tod = tk.BooleanVar(value=True)
         self.var_isfast = tk.BooleanVar(value=True)
@@ -57,6 +58,7 @@ class App(ttk.Frame):
         self.var_d5 = tk.StringVar()
         self.var_d6 = tk.StringVar()
         self.var_d7 = tk.StringVar()
+        self.var_d8 = tk.StringVar()
 
         self.setup_widgets()
 
@@ -78,6 +80,7 @@ class App(ttk.Frame):
             self.venue = ve['venue']
             self.timeI = ve['time']
             self.field = ve['ci']
+
         with open('netConfig.json') as f:
             ve = json.loads(f.read())
             self.lcoo = ve['loginCookie']
@@ -89,9 +92,16 @@ class App(ttk.Frame):
             self.user = ve['user']
             self.passw = ve['password']
             self.recr = ve['recr']
-        print(self.var_isfast.get(),'\n',self.var_isfood.get(),'\n',self.var_isam.get())
-        #执行关键程序
+            a = self.var_d3
+        print(self.var_d1.get().isalnum(), self.var_d2.get().isalnum(), self.var_d3.get())
+        daylist = [self.var_d1.get(), self.var_d2.get(), self.var_d3.get(), self.var_d4.get(), self.var_d5.get(),
+                   self.var_d6.get(), self.var_d7.get(), self.var_d8.get()]
+        # 执行关键程序
+        mainApp = Auto(self.var_isfast, self.isAm, self.var_isfood, self.isToday, daylist, self.sport, self.venue,
+                       self.timeI, self.field, self.lcoo, self.bcoo, self.usag)
+        mainApp.run()
 
+        # 推出功能
 
 
 
@@ -309,11 +319,11 @@ class App(ttk.Frame):
         self.d6.grid(row=3, column=1, padx=5, pady=10, sticky="nsew")
         self.d7 = ttk.Checkbutton(self.rootPage, text=self.datelist[6], style="Toggle.TButton", variable=self.var_d7)
         self.d7.grid(row=3, column=2, padx=5, pady=10, sticky="nsew")
+        self.d8 = ttk.Checkbutton(self.rootPage, text=self.datelist[7], style="Toggle.TButton", variable=self.var_d8)
+        self.d8.grid(row=3, column=3, padx=5, pady=10, sticky="nsew")
 
-
-
-        self.switch = ttk.Button(self.rootPage, text="START",command=self.start)
-        self.switch.grid(row=3, column=3, padx=5, pady=10, sticky="nsew")
+        self.switch = ttk.Button(self.rootPage, text="START", command=self.start)
+        self.switch.grid(row=4, column=0, padx=5, pady=10, sticky="nsew", columnspan=4)
 
         # self.menu_frame2 = ttk.LabelFrame(self, text="About", padding=(40, 10), labelanchor="n")
         # self.menu_frame2.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew", columnspan=4)
@@ -379,9 +389,11 @@ class App(ttk.Frame):
         self.d6.grid(row=3, column=1, padx=5, pady=10, sticky="nsew")
         self.d7 = ttk.Checkbutton(self.rootPage, text=self.datelist[6], style="Toggle.TButton", variable=self.var_d7)
         self.d7.grid(row=3, column=2, padx=5, pady=10, sticky="nsew")
+        self.d8 = ttk.Checkbutton(self.rootPage, text=self.datelist[7], style="Toggle.TButton", variable=self.var_d8)
+        self.d8.grid(row=3, column=3, padx=5, pady=10, sticky="nsew")
 
         self.switch = ttk.Button(self.rootPage, text="START", command=self.start)
-        self.switch.grid(row=3, column=3, padx=5, pady=10, sticky="nsew")
+        self.switch.grid(row=4, column=0, padx=5, pady=10, sticky="nsew", columnspan=4)
         # fd = filedialog.LoadFileDialog(self.menu_frame2)  # 创建打开文件对话框
         # filename = fd.go()  # 显示打开文件对话框，并获取选择的文件名称
         # filedialog.Open(filename)
