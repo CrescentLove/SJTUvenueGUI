@@ -56,7 +56,7 @@ class Auto():
                         continue
                     if self.dlist[i] == '1':
                         print(self.dlist[i], '--下午巡航场地')
-                        seizor.getwhich(self.datelist[i], Wtimen, Wsiten, self.noam, self.noeat)
+                        st_B += seizor.getwhich(self.datelist[i], Wtimen, Wsiten, self.noam, self.noeat)
 #
 #
 # if __name__ == '__main__':

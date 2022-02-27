@@ -110,10 +110,11 @@ class venSeizor():
     def getwhich(self, Wdate, Wtimen, Wsiten, isam, iseat):
         """
         GUI出来之前暂时不提供自由设定偏好的选项
-        :param thres: 是否选择抢下午3:00前场地，默认no，
+        :param isam: 是否选择不抢上午场地（11点前），默认true，
+        :param iseat: 是否不抢饭点（11-13，17-19），默认true
         :param Wdate: 预定日期xxxx-xx-xx,str
-        :param Wtime: 预定场次x(0-->7:00-8:00,14-->21:00-22:00),int
-        :param Wsite: 预定场地x(1-->场地1,12-->场地12),int
+        :param Wtimen: 预定场次x(0-->7:00-8:00,14-->21:00-22:00),int
+        :param Wsiten: 预定场地x(1-->场地1,12-->场地12),int
         :return: st_cru,1-->成功，0-->失败
         """
         print('开始getwhich')
