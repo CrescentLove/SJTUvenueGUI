@@ -97,11 +97,13 @@ class App(ttk.Frame):
         daylist = [self.var_d1.get(), self.var_d2.get(), self.var_d3.get(), self.var_d4.get(), self.var_d5.get(),
                    self.var_d6.get(), self.var_d7.get(), self.var_d8.get()]
         # 执行关键程序
-        mainApp = Auto(self.var_isfast, self.isAm, self.var_isfood, self.isToday, daylist, self.sport, self.venue,
+        mainApp = Auto(self.var_isfast.get(), self.var_isam.get(), self.var_isfood.get(), self.var_tod.get(), daylist,
+                       self.sport, self.venue,
                        self.timeI, self.field, self.lcoo, self.bcoo, self.usag)
         mainApp.run()
 
         # 推出功能
+
 
 
 
@@ -359,41 +361,7 @@ class App(ttk.Frame):
         self.mailA = ttk.Label(self.menu_frame2, text="Mail: markdowndir@foxmail.com", padding=(40, 10))
         self.mailA.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew", columnspan=4)
 
-        self.rootPage = ttk.LabelFrame(self, text="菜单", padding=(10, 5), labelanchor="n")  # 修改按钮和边框宽度
-        self.rootPage.grid(row=0, column=1, padx=(20, 10), pady=(20, 10), sticky="nsew")
-        self.rootPage.columnconfigure(index=0, weight=1)
-
-        self.isAm = ttk.Checkbutton(self.rootPage, text="不抢上午", style="Switch.TCheckbutton", variable=self.var_isam)
-        self.isAm.grid(row=1, column=0, padx=5, pady=10, sticky="nsew")
-
-        self.isToday = ttk.Checkbutton(self.rootPage, text="不抢今日", style="Switch.TCheckbutton", variable=self.var_tod)
-        self.isToday.grid(row=1, column=2, padx=5, pady=10, sticky="nsew")
-
-        self.isAm = ttk.Checkbutton(self.rootPage, text="不抢饭点", style="Switch.TCheckbutton", variable=self.var_isfood)
-        self.isAm.grid(row=1, column=1, padx=5, pady=10, sticky="nsew")
-
-        self.isAm = ttk.Checkbutton(self.rootPage, text="慢速防挂", style="Switch.TCheckbutton", variable=self.var_isfast)
-        self.isAm.grid(row=1, column=3, padx=5, pady=10, sticky="nsew")
-
-        self.d1 = ttk.Checkbutton(self.rootPage, text=self.datelist[0], style="Toggle.TButton", variable=self.var_d1)
-        self.d1.grid(row=2, column=0, padx=5, pady=10, sticky="nsew")
-        self.d2 = ttk.Checkbutton(self.rootPage, text=self.datelist[1], style="Toggle.TButton", variable=self.var_d2)
-        self.d2.grid(row=2, column=1, padx=5, pady=10, sticky="nsew")
-        self.d3 = ttk.Checkbutton(self.rootPage, text=self.datelist[2], style="Toggle.TButton", variable=self.var_d3)
-        self.d3.grid(row=2, column=2, padx=5, pady=10, sticky="nsew")
-        self.d4 = ttk.Checkbutton(self.rootPage, text=self.datelist[3], style="Toggle.TButton", variable=self.var_d4)
-        self.d4.grid(row=2, column=3, padx=5, pady=10, sticky="nsew")
-        self.d5 = ttk.Checkbutton(self.rootPage, text=self.datelist[4], style="Toggle.TButton", variable=self.var_d5)
-        self.d5.grid(row=3, column=0, padx=5, pady=10, sticky="nsew")
-        self.d6 = ttk.Checkbutton(self.rootPage, text=self.datelist[5], style="Toggle.TButton", variable=self.var_d6)
-        self.d6.grid(row=3, column=1, padx=5, pady=10, sticky="nsew")
-        self.d7 = ttk.Checkbutton(self.rootPage, text=self.datelist[6], style="Toggle.TButton", variable=self.var_d7)
-        self.d7.grid(row=3, column=2, padx=5, pady=10, sticky="nsew")
-        self.d8 = ttk.Checkbutton(self.rootPage, text=self.datelist[7], style="Toggle.TButton", variable=self.var_d8)
-        self.d8.grid(row=3, column=3, padx=5, pady=10, sticky="nsew")
-
-        self.switch = ttk.Button(self.rootPage, text="START", command=self.start)
-        self.switch.grid(row=4, column=0, padx=5, pady=10, sticky="nsew", columnspan=4)
+        self.clickzhuye()
         # fd = filedialog.LoadFileDialog(self.menu_frame2)  # 创建打开文件对话框
         # filename = fd.go()  # 显示打开文件对话框，并获取选择的文件名称
         # filedialog.Open(filename)

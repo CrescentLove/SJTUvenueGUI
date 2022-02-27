@@ -94,6 +94,7 @@ class venSeizor():
         :param WDate: 爬取预定日期
         :return: SiteInfo预定日期
         """
+        print(WDate)
         Fieldata = json.dumps({'fieldType': self.venTypeId, 'date': WDate})
         SiteInfo = [[0 for y in range(0, 12)] for x in range(0, 15)]
         try:
@@ -115,16 +116,18 @@ class venSeizor():
         :param Wsite: 预定场地x(1-->场地1,12-->场地12),int
         :return: st_cru,1-->成功，0-->失败
         """
-
+        print('开始getwhich')
         st_cru = 0
         Sited = self.getField(self.venTypeId, Wdate)
         if Sited[Wtimen][Wsiten] == 1:
+            print('刚好有预定配置')
             payload = self.getInfo(Wdate, Wtimen, Wsiten)
             st_cru = self.Seizor(payload)
             time.sleep(random.randint(0, 58))
             if st_cru:
                 return 1
         if 1 in Sited[Wtimen]:
+            print('开始同时段补位')
             Wsite_1 = Sited[Wtimen].index(1)
             payload = self.getInfo(Wdate, Wtimen, Wsite_1)
             st_cru = self.Seizor(payload)
@@ -135,16 +138,21 @@ class venSeizor():
         ealist = [-1]
         if isam:
             amlist = [0, 1, 2, 3]
+            print('不抢7-11')
         if iseat:
             ealist = [4, 5, 10, 11]
+            print('不抢11-12，12-13，17-18，18-19')
 
         for i in range(14, 0, -1):  # 不抢七点
             if i in amlist:
+                print('不抢早')
                 continue
             if i in ealist:
+                print('不抢饭点')
                 continue
             if 1 in Sited[i]:
                 Wsite_1 = Sited[i].index(1)
+                print('补位场地', Wsite_1)
                 payload = self.getInfo(Wdate, i, Wsite_1)
                 st_cru = self.Seizor(payload)
                 if st_cru:
@@ -171,9 +179,11 @@ class venSeizor():
             if timeNow + 1 - timeG > 0:
                 _Status = self.Seizor(payload)
                 if _Status:
+                    print('抢到最新')
                     break
                 time.sleep(random.random() * 0.4)
                 if timeNow - timeG > 20:
+                    print('过时开始巡航')
                     break
 
         return _Status
