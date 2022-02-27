@@ -118,12 +118,11 @@ class venSeizor():
         """
         print('开始getwhich')
         st_cru = 0
-        Sited = self.getField(self.venTypeId, Wdate)
+        Sited = self.getField(Wdate)
         if Sited[Wtimen][Wsiten] == 1:
             print('刚好有预定配置')
             payload = self.getInfo(Wdate, Wtimen, Wsiten)
             st_cru = self.Seizor(payload)
-            time.sleep(random.randint(0, 58))
             if st_cru:
                 return 1
         if 1 in Sited[Wtimen]:
@@ -133,22 +132,19 @@ class venSeizor():
             st_cru = self.Seizor(payload)
             if st_cru:
                 return 1
-            time.sleep(random.randint(0, 58))
         amlist = [-1]
         ealist = [-1]
         if isam:
             amlist = [0, 1, 2, 3]
-            print('不抢7-11')
+            # print('不抢7-11')
         if iseat:
             ealist = [4, 5, 10, 11]
-            print('不抢11-12，12-13，17-18，18-19')
+            # print('不抢11-12，12-13，17-18，18-19')
 
         for i in range(14, 0, -1):  # 不抢七点
             if i in amlist:
-                print('不抢早')
                 continue
             if i in ealist:
-                print('不抢饭点')
                 continue
             if 1 in Sited[i]:
                 Wsite_1 = Sited[i].index(1)
@@ -157,7 +153,7 @@ class venSeizor():
                 st_cru = self.Seizor(payload)
                 if st_cru:
                     return 1
-                time.sleep(random.randint(0, 58))
+        time.sleep(random.randint(0, 58))
 
         return st_cru
 

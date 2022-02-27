@@ -5,6 +5,8 @@
 import datetime
 import json
 import os
+import sys
+import threading
 import tkinter as tk
 import tkinter.messagebox  # 这个是消息框，对话框的关键
 from tkinter import ttk
@@ -100,21 +102,36 @@ class App(ttk.Frame):
         mainApp = Auto(self.var_isfast.get(), self.var_isam.get(), self.var_isfood.get(), self.var_tod.get(), daylist,
                        self.sport, self.venue,
                        self.timeI, self.field, self.lcoo, self.bcoo, self.usag)
-        mainApp.run()
+
+        self.thread_it(mainApp.sta)
 
         # 推出功能
 
+    def thread_it(self, func, *args):
+        '''将函数打包进线程'''
+        # 创建
+        t = threading.Thread(target=func, args=args)
+        # 守护 !!!
+        t.setDaemon(True)
+        # 启动
+        t.start()
+        # 阻塞--卡死界面！
+        # t.join()
 
+    def endProgam(self):
+        raise SystemExit
+        sys.exit()
 
-
-####################################################################################################
+    ####################################################################################################
     def delnet(self):
-        self.Netentry1.delete(0,"end")
+        self.Netentry1.delete(0, "end")
         self.Netentry2.delete(0, "end")
         self.Netentry3.delete(0, "end")
+
     def savenet(self):
-        with open(file='netConfig.json',mode='w+',encoding='utf-8') as n:
-            data = {"loginCookie":self.Netentry1.get(),"confirmCookie":self.Netentry2.get(),"userAgent":self.Netentry3.get()}
+        with open(file='netConfig.json', mode='w+', encoding='utf-8') as n:
+            data = {"loginCookie": self.Netentry1.get(), "confirmCookie": self.Netentry2.get(),
+                    "userAgent": self.Netentry3.get()}
             json.dump(data, n)
 
     def delmail(self):
@@ -131,6 +148,7 @@ class App(ttk.Frame):
         with open(file='venueConfig.json',mode='w+',encoding='utf-8') as n:
             data = {"sport":self.var_4.get(),"venue":self.var_5.get(),"time":self.var_6.get(),"ci":self.var_7.get(),"proj":self.var_8.get()}
             json.dump(data, n)
+
 
 #####################################################################################################
     def clickshouce(self):
@@ -324,9 +342,10 @@ class App(ttk.Frame):
         self.d8 = ttk.Checkbutton(self.rootPage, text=self.datelist[7], style="Toggle.TButton", variable=self.var_d8)
         self.d8.grid(row=3, column=3, padx=5, pady=10, sticky="nsew")
 
-        self.switch = ttk.Button(self.rootPage, text="START", command=self.start)
+        self.switch = ttk.Button(self.rootPage, text="START", style="Accent.TButton", command=self.start)
         self.switch.grid(row=4, column=0, padx=5, pady=10, sticky="nsew", columnspan=4)
-
+        self.endp = ttk.Button(self.rootPage, text="QUIT", command=self.endProgam)
+        self.endp.grid(row=5, column=0, padx=5, pady=10, sticky="nsew", columnspan=4)
         # self.menu_frame2 = ttk.LabelFrame(self, text="About", padding=(40, 10), labelanchor="n")
         # self.menu_frame2.grid(row=1, column=0, padx=(20, 10), pady=(20, 10), sticky="nsew", columnspan=4)
         # 点击开始抢票！（会检查是否配置方案，网络，如果没有弹出警告框跳转，检查是否配置邮件，弹出建议配置）
