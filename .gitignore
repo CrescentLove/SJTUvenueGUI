@@ -132,3 +132,9 @@ dmypy.json
 /mailConfig.json
 /netConfig.json
 /venueConfig.json
+/testTK.py
+/testTK2.py
+/example.py
+/readme.md
+/GymSeizor.py
+/CrescentRes/encrypt.py
