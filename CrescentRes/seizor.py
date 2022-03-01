@@ -129,6 +129,7 @@ class venSeizor():
         if 1 in Sited[Wtimen]:
             print('开始同时段补位')
             Wsite_1 = Sited[Wtimen].index(1)
+            print('日期时间场地', Wdate, '\t', Wtimen, '\t', Wsite_1)
             payload = self.getInfo(Wdate, Wtimen, Wsite_1)
             st_cru = self.Seizor(payload)
             if st_cru:
@@ -196,6 +197,7 @@ class venSeizor():
         st = 0  # 标识符判断是否成功
         try:
             fieldjson = json.dumps(payload)
+            print(fieldjson)
             print(type(fieldjson), "--SeizorNeed\n", fieldjson)  # 测试用
             aes_key = encrypt.get_key()
             data_encrypt = encrypt.aes_en(aes_key, fieldjson)
@@ -231,7 +233,7 @@ class venSeizor():
         if UserIn == False:
             Wdate_G = Wishdate
             Wtime_G = self.__List2RealTime[TimeId]
-            Wsite_G = self.__List2RealSite[SiteId - 1]
+            Wsite_G = self.__List2RealSite[SiteId]
         else:
             Wdate_G = str(input("日期：XXXX-xx-xx"))
             Wtime_G = int(input("时间：x"))
@@ -256,6 +258,7 @@ class venSeizor():
             ],
             "tenSity": "紧张"}
         # fieJson = json.dumps(fieConfig)
+        print(fieConfig)
         return fieConfig
 
     def fielData(self, venTypeId, WishDate):

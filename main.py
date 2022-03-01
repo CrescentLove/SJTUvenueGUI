@@ -5,7 +5,6 @@
 import datetime
 import json
 import os
-import sys
 import threading
 import tkinter as tk
 import tkinter.messagebox  # 这个是消息框，对话框的关键
@@ -96,7 +95,7 @@ class App(ttk.Frame):
             self.passw = ve['password']
             self.recr = ve['recr']
             a = self.var_d3
-        print(self.var_d1.get().isalnum(), self.var_d2.get().isalnum(), self.var_d3.get())
+        print(self.var_d1.get(), self.var_d2.get(), self.var_d3.get())
         daylist = [self.var_d1.get(), self.var_d2.get(), self.var_d3.get(), self.var_d4.get(), self.var_d5.get(),
                    self.var_d6.get(), self.var_d7.get(), self.var_d8.get()]
         # 执行关键程序
@@ -121,7 +120,6 @@ class App(ttk.Frame):
 
     def endProgam(self):
         raise SystemExit
-        sys.exit()
 
     ####################################################################################################
     def delnet(self):
