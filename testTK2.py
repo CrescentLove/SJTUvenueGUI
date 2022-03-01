@@ -5,7 +5,7 @@
 import threading
 import time
 import tkinter as tk
-
+# 测试用
 songs = ['爱情买卖', '朋友', '回家过年', '好日子']
 films = ['阿凡达', '猩球崛起']
 

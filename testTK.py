@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-
+# 测试用
 root = Tk()
 root.geometry('900x700')
 root.title('计算机191班绩点计算小程序')
