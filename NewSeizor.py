@@ -29,6 +29,7 @@ class Auto():
                                 "13:00-14:00", "14:00-15:00", "15:00-16:00", "16:00-17:00", "17:00-18:00",
                                 "18:00-19:00",
                                 "19:00-20:00", "20:00-21:00", "21:00-22:00"]
+        self.st_B = 0
 
     def sta(self):
         loGin(self.usag)
@@ -38,7 +39,6 @@ class Auto():
         Wsiten = self.__List2RealSite.index(self.field)
         print(self.dlist, '\n', Wtimen, Wsiten, self.slow, self.noam, self.noeat)
         seizor = venSeizor(self.lcoo, self.bcoo, self.usag, self.sport, self.venue)
-        st_B = 0
         while 1:
             if timeN < 1150:
                 for i in range(6, -1, -1):
@@ -46,18 +46,18 @@ class Auto():
                         continue
                     if self.dlist[i] == '1':
                         print('上午巡航场地')
-                        st_B += seizor.getwhich(self.datelist[i], Wtimen, Wsiten, self.noam, self.noeat)
-                        print(st_B)
+                        self.st_B = seizor.getwhich(self.datelist[i], Wtimen, Wsiten, self.noam, self.noeat)
+                        print(self.st_B)
             else:
                 if timeN < 1201:
-                    st_B += seizor.getOne(self.datelist[6], Wtimen, Wsiten)
+                    self.st_B = seizor.getOne(self.datelist[6], Wtimen, Wsiten)
                 for i in range(7, -1, -1):
                     if i == 0 and self.notod:
                         continue
                     if self.dlist[i] == '1':
                         print('--下午巡航场地')
-                        st_B += seizor.getwhich(self.datelist[i], Wtimen, Wsiten, self.noam, self.noeat)
-                        print(st_B)
+                        self.st_B = seizor.getwhich(self.datelist[i], Wtimen, Wsiten, self.noam, self.noeat)
+                        print(self.st_B)
 #
 #
 # if __name__ == '__main__':

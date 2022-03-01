@@ -10,6 +10,7 @@ import tkinter as tk
 import tkinter.messagebox  # 这个是消息框，对话框的关键
 from tkinter import ttk
 
+from CrescentRes.Mail import Mail
 # from tkinter import filedialog
 from NewSeizor import Auto
 
@@ -65,6 +66,7 @@ class App(ttk.Frame):
         self.setup_widgets()
 
     ############################################################################
+
     def start(self):
         if not os.path.exists('mailConfig.json'):
             ismail = tkinter.messagebox.askokcancel('提示', '是否配置邮箱?')
@@ -104,6 +106,9 @@ class App(ttk.Frame):
                        self.timeI, self.field, self.lcoo, self.bcoo, self.usag)
 
         self.thread_it(mainApp.sta)
+
+        mailnow = Mail(self.host, self.user, self.passw, self.recr)
+        self.thread_it(mailnow.mail2me, mainApp.st_B)
 
         # 推出功能
 
